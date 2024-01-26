@@ -4,7 +4,7 @@ entity Student{
     @title:'Student ID'
     key st_id:String(10);
     @title:'Gender'
-    gender:Association to Gender;
+    gender:String(1);
     @title:'First Name'
     first_name:String(10) @mandatory;
     @title:'Last Name'
@@ -17,10 +17,11 @@ entity Student{
     dob: Date @mandatory;
     @title:'Age'
     virtual age:Integer @Core.Computed;
+    virtual Gen_Des: String @Core.Computed;
 
 }
 
-
+@cds.persistence.skip
 entity Gender {
     @title:'code'
     key code: String(1);

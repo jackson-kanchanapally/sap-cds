@@ -12,13 +12,15 @@ function calcAge(dob) {
 }
 
 module.exports = cds.service.impl(async function () {
-    const { Student } = this.entities;
+    const { Student,Gender } = this.entities;
 
     this.on('READ', Student, async (req) => {
         const results = await cds.run(req.query);
         if (Array.isArray(results)) {
             results.forEach(element => {
                 element.age = calcAge(element.dob);
+                if(element.gender=='F') element.gender="Female"
+                if(element.gender=='M') element.gender="Male"
             });
         } else {
             results.age = calcAge(results.dob);
@@ -50,4 +52,12 @@ module.exports = cds.service.impl(async function () {
             }
         }
     });
+    this.on('READ',Gender,async(req)=>{
+        genders=[
+            {"code":"M","description":"Male"},
+            {"code":"F","description":"Female"}
+        ]
+        genders.$count=genders.length
+        return genders;
+    })
 });

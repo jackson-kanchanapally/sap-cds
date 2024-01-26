@@ -45,7 +45,7 @@ annotate StudentDB.Student with @(
         {
             $Type : 'UI.DataField',
             Label:'Gender',
-            Value : gender.description
+            Value : gender
         },
         {
             $Type : 'UI.DataField',
@@ -87,7 +87,7 @@ annotate StudentDB.Student with @(
             {
                 $Type : 'UI.DataField',
                 Label:'Gender',
-                Value : gender_code,
+                Value : gender,
             },
             {
                 $Type : 'UI.DataField',
@@ -131,7 +131,7 @@ annotate StudentDB.Student with {
             Parameters : [
                 {
                     $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty:gender_code,
+                    LocalDataProperty:gender,
                     ValueListProperty:'code'
                 },
                 {
