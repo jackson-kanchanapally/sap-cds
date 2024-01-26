@@ -19,8 +19,8 @@ module.exports = cds.service.impl(async function () {
         if (Array.isArray(results)) {
             results.forEach(element => {
                 element.age = calcAge(element.dob);
-                if(element.gender=='F') element.gender="Female"
-                if(element.gender=='M') element.gender="Male"
+                if(element.gender=='F') element.Gen_Des="Female"
+                if(element.gender=='M') element.Gen_Des="Male"
             });
         } else {
             results.age = calcAge(results.dob);

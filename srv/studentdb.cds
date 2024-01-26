@@ -71,9 +71,13 @@ annotate StudentDB.Student with @(
             $Type : 'UI.DataField',
             Value : age
         },
+        {
+            $Type : 'UI.DataField',
+            Value : Gen_Des
+        }
         
     ],
-    UI.SelectionFields: [ first_name , last_name, email_id,pan_no,dob,age],
+    UI.SelectionFields: [ first_name , last_name, email_id,pan_no,dob,age,Gen_Des],
 );
 
 annotate StudentDB.Student with @(
@@ -109,7 +113,10 @@ annotate StudentDB.Student with @(
                 $Type : 'UI.DataField',
                 Value : dob,
             },
-          
+           {
+            $Type : 'UI.DataField',
+            Value : Gen_Des
+        }
         ],
     },
     UI.Facets : [
