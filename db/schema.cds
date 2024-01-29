@@ -3,8 +3,7 @@ using {managed,cuid} from '@sap/cds/common';
 @assert.unique:{
     st_id:[st_id]
 }
-entity Student{
-    key ID: UUID;
+entity Student : cuid{
     @title:'Student ID'
     st_id:String(10);
     @title:'Gender'
