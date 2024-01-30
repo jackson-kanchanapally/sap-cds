@@ -3,7 +3,8 @@ using {managed,cuid} from '@sap/cds/common';
 @assert.unique:{
     st_id:[st_id]
 }
-entity Student : cuid{
+//managed adds created on or updated on and created or updated By info of the record to db
+entity Student : cuid, managed{
     @title:'Student ID'
     st_id:String(10);
     @title:'Gender'
@@ -18,9 +19,10 @@ entity Student : cuid{
     pan_no:String(10);
     @title:'DOB'
     dob: Date @mandatory;
+    @title:'Course selected'
+    course:Association to Courses;
     @title:'Age'
     virtual age:Integer @Core.Computed;
-    virtual Gen_Des: String @Core.Computed;
 
 }
 
@@ -30,4 +32,11 @@ entity Gender {
     key code: String(1);
     @title:'description'
     description:String(10);
+}
+
+entity Courses : cuid, managed {
+    @title:'Code'
+    code:String(5);
+    @title:'Description'
+    description:String(20);
 }
