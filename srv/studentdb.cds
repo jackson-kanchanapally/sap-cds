@@ -13,6 +13,11 @@ service StudentDB {
         ID,
         *
     };
+    entity Books as projection on db.Books{
+        @UI.Hidden : true
+        ID,
+        *
+    };
 
 }
 
@@ -21,6 +26,7 @@ annotate StudentDB.Student with @odata.draft.enabled;
 //done they will get placed in draft table not the original table here it only takes the student id to add data one 
 annotate StudentDB.Courses with @odata.draft.enabled;
 annotate StudentDB.Languages with @odata.draft.enabled;
+annotate StudentDB.Books with @odata.draft.enabled;
 
 
 annotate StudentDB.Student with {
@@ -55,6 +61,60 @@ annotate StudentDB.Student.Languages with @(
  ],
 );
 
+annotate StudentDB.Courses.Books with @(
+ UI.LineItem: [
+        {
+            Label: 'Books',
+            Value : book_ID
+        },
+ ],
+ UI.FieldGroup #CourseBooks : {
+    $Type : 'UI.FieldGroupType',
+    Data : [
+        {
+            Value :book_ID
+        }
+    ],
+ },
+ UI.Facets : [
+    {
+        $Type :'UI.ReferenceFacet',
+        ID : 'CourseBooksFacet',
+        Label : 'CourseBooks',
+        Target : '@UI.FieldGroup#CourseBooks',
+    },
+ ],
+);
+
+annotate StudentDB.Books with @(
+    UI.LineItem:[
+        {
+            Value: code
+        },
+        {
+            Value: description
+        }
+    ],
+    UI.FieldGroup #Books :{
+        $Type : 'UI.FieldGroupType',
+        Data :[
+            {
+                Value : code,
+            },
+            {
+                Value : description
+            }
+        ]
+    },
+    UI.Facets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'BooksFacet',
+            Lable : 'Books',
+            Target : '@UI.FieldGroup#Books'
+        }
+    ]
+);
 annotate StudentDB.Languages with @(
     UI.LineItem:[
         {
@@ -94,6 +154,10 @@ annotate StudentDB.Courses with @(
         {
             Value : description
         },
+        {
+            Label : 'Course Books ',
+            Value : Books.book.description
+        },
     ],
      UI.FieldGroup #CourseInformation : {
         $Type : 'UI.FieldGroupType',
@@ -112,6 +176,12 @@ annotate StudentDB.Courses with @(
             ID : 'StudentInfoFacet',
             Label : 'Student Information',
             Target : '@UI.FieldGroup#CourseInformation',
+        },
+         {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'CourseBookFacet',
+            Label : 'Course Books',
+            Target : 'Books/@UI.LineItem',
         },
     ],
     
@@ -165,7 +235,6 @@ annotate StudentDB.Student with @(
             Value : dob
         },
         {
-            $Type : 'UI.DataField',
             Label : 'Languages Known',
             Value : Languages.lang.description
         },
@@ -239,6 +308,32 @@ annotate StudentDB.Student with @(
     ],
     
 );
+annotate StudentDB.Courses.Books with {
+    book @(
+        Common.Text: book.description,
+        Common.TextArrangement: #TextOnly,
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList : {
+            Label: 'Books',
+            CollectionPath : 'Books',
+            Parameters: [
+                {
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : book_ID,
+                    ValueListProperty : 'ID'
+                },
+                {
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'code'
+                },
+                {
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'description'
+                },
+            ]
+        }
+    );
+};
 
 annotate StudentDB.Student.Languages with {
     lang @(
