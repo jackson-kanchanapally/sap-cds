@@ -21,6 +21,11 @@ entity Student : cuid, managed{
     dob: Date @mandatory;
     @title:'Course selected'
     course:Association to Courses;
+    Languages : Composition of many{
+        key ID: UUID;
+        lang :Association to Languages;
+
+    }
     @title:'Age'
     virtual age:Integer @Core.Computed;
 
@@ -37,6 +42,13 @@ entity Gender {
 entity Courses : cuid, managed {
     @title:'Code'
     code:String(5);
+    @title:'Description'
+    description:String(20);
+}
+
+entity Languages : cuid,managed{
+    @title:'Code'
+    code:String(3);
     @title:'Description'
     description:String(20);
 }
