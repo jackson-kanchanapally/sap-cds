@@ -21,6 +21,21 @@
     "watch-courses": "cds watch --open courses/webapp/index.html?sap-ui-xx-viewCache=false",
     "watch-project1": "cds watch --open project1/webapp/index.html?sap-ui-xx-viewCache=false"
   },
+  "cds": {
+    "fiori": {
+      "lean_draft": true,
+      "bypass_draft": true
+    },
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      }
+    
+}
+} ,
   "sapux": [
     "app/webapp",
     "app/web",

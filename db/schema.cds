@@ -12,13 +12,13 @@ entity Student : cuid, managed{
     @title:'First Name'
     first_name:String(10) @mandatory;
     @title:'Last Name'
-    last_name:String(10) @mandatory;
+    last_name:String(10);
     @title:'Email Address'
     email_id:String(40) @mandatory;
     @title:'PAN Number'
     pan_no:String(10);
     @title:'DOB'
-    dob: Date @mandatory;
+    dob: Date ;
     @title:'Course selected'
     course:Association to Courses;
     Languages : Composition of many{
@@ -28,7 +28,8 @@ entity Student : cuid, managed{
     }
     @title:'Age'
     virtual age:Integer @Core.Computed;
-
+    @title:'is alumni'
+    is_alumni:Boolean default false;
 }
 
 @cds.persistence.skip
@@ -44,7 +45,7 @@ entity Courses : cuid, managed {
     @title:'Code'
     code:String(5);
     @title:'Description'
-    description:String(20);
+    description:String(30);
      Books : Composition of many{
         key ID: UUID;
        book :Association to Books;

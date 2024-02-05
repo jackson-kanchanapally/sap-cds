@@ -110,7 +110,7 @@ annotate StudentDB.Books with @(
         {
             $Type : 'UI.ReferenceFacet',
             ID : 'BooksFacet',
-            Lable : 'Books',
+            Label : 'Books',
             Target : '@UI.FieldGroup#Books'
         }
     ]
@@ -247,6 +247,9 @@ annotate StudentDB.Student with @(
             Label : 'Course Selected',
             Value : course.code
         },
+        {
+            Value:is_alumni
+        }
         
     ],
     UI.SelectionFields: [ first_name , last_name, email_id,pan_no,dob,age],
@@ -408,4 +411,3 @@ annotate StudentDB.Student with {
         }
     )
 }
-
