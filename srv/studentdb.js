@@ -12,7 +12,7 @@ function calcAge(dob) {
 }
 
 module.exports = cds.service.impl(async function () {
-    const { Student,Gender } = this.entities;
+    const { Student,Gender,Courses } = this.entities;
 
     this.on('READ', Student, async (req) => {
         const results = await cds.run(req.query);
@@ -34,12 +34,19 @@ module.exports = cds.service.impl(async function () {
         if (age < 18 || age > 45) {
             req.error({ code: 'WRONGDOB', message: 'Student not the right age for school: ' + age, target: 'dob' });
         }
-
         const query1 = SELECT.from(Student).where({ email_id: req.data.email_id });
         const result = await cds.run(query1);
         if (result.length > 0) {
             req.error({ code: 'STEMAILEXISTS', message: 'Student with such email already exists', target: 'email_id' });
         }
+    });
+    this.before('CREATE', Courses, async (req) => {
+        const query1 = SELECT.from(Courses).where({ ID: req.data.ID });
+        const result = await cds.run(query1);
+        if (result.length > 0) {
+            req.error({ code: 'STEMAILEXISTS', message: 'Student with such email already exists', target: 'code' });
+        }
+        console.log(req.data.Books.book_ID)
     });
 
     this.before('UPDATE', Student, async (req) => {
@@ -51,6 +58,7 @@ module.exports = cds.service.impl(async function () {
                 req.error({ code: 'STEMAILEXISTS', message: 'Student with such email already exists', target: 'email_id' });
             }
         }
+       
     });
     this.on('READ',Gender,async(req)=>{
         genders=[
